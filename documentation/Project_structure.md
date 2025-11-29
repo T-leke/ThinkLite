@@ -1,4 +1,40 @@
 ## Project/File structure
+crates/thinklite-core/
+├── Cargo.toml
+└── src/
+    ├── lib.rs
+    ├── storage/
+    │   ├── mod.rs
+    │   ├── file.rs        # low-level file IO, mmap or std::fs
+    │   ├── page.rs        # page struct, page id, page layout
+    │   ├── pager.rs       # page cache, read/write pages
+    │   ├── record.rs      # row encoding/decoding
+    │   └── table_heap.rs  # append-only heap of pages
+    ├── catalog/
+    │   ├── mod.rs
+    │   ├── schema.rs      # column definitions, types
+    │   └── catalog.rs     # info about tables, indexes
+    ├── sql/
+    │   ├── mod.rs
+    │   ├── lexer.rs       # tokenize SQL
+    │   ├── parser.rs      # AST
+    │   └── ast.rs         # SELECT, INSERT, etc
+    ├── planner/
+    │   ├── mod.rs
+    │   └── logical_plan.rs  # logical operators, maybe physical later
+    ├── executor/
+    │   ├── mod.rs
+    │   ├── operators.rs   # SeqScan, IndexScan, Filter, Projection
+    │   └── engine.rs      # coordinates execution
+    ├── index/
+    │   ├── mod.rs
+    │   └── btree.rs       # or hash index
+    ├── txn/
+    │   ├── mod.rs
+    │   ├── wal.rs         # write-ahead log (later)
+    │   └── lock.rs        # (later) simple locks
+    └── db.rs              # ThinkLiteDB public API
+
 
 1. storage/ — Correct (Low-level Storage Engine)
 
